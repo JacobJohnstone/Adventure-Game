@@ -2,6 +2,7 @@ using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -19,7 +20,13 @@ public class Movement : MonoBehaviour
     [SerializeField] float castDistance;
 
     private float horizontal;
+    private bool canMove;
 
+    public void Start()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        canMove = activeScene.name != "Combat";
+    }
 
     private void FixedUpdate()
     {
@@ -31,12 +38,15 @@ public class Movement : MonoBehaviour
     #region PLAYER_CONTROLS
     public void Move(InputAction.CallbackContext context)
     {
-      horizontal = context.ReadValue<Vector2>().x;
+        if (canMove)
+        {
+            horizontal = context.ReadValue<Vector2>().x;
+        }
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if(context.performed && IsGrounded())
+        if(context.performed && IsGrounded() && canMove)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
         }
