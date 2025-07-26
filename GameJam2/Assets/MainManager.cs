@@ -4,13 +4,14 @@ public class MainManager : MonoBehaviour
 {
     public static MainManager instance;
 
-
     Transform nextSpawn;
 
     // Player stats
-    public int maxHP;
-    public int currentHP;
-     public int xp;
+    [System.NonSerialized]  public int maxHP = 10;
+    [System.NonSerialized]  public int currentHP = 4;
+    [System.NonSerialized]  public int maxMana = 20; // regain 10 per turn
+    [System.NonSerialized]  public int xp = 0;
+    [System.NonSerialized]  public int damage = 5;
 
     // Extra potential uses
     public bool foundSpellBook;

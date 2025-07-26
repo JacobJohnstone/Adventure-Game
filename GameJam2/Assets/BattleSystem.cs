@@ -27,7 +27,7 @@ public class BattleSystem : MonoBehaviour
 
     Unit playerUnit;
     Unit enemyUnit;
-
+    
     public PlayerHud playerHUD;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -47,7 +47,7 @@ public class BattleSystem : MonoBehaviour
 
         // Drag the canvas text element you want to display the name of the enemy
         dialogueText.text = enemyUnit.unitName + " has approached!";
-        //playerHUD.SetHUD(playerUnit);
+        playerHUD.SetHUD(playerUnit);
 
         yield return new WaitForSeconds(2f);
 
@@ -83,7 +83,7 @@ public class BattleSystem : MonoBehaviour
         bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
 
         // update UI
-        // enemyHUD.SetHP(enemyUnit.currentHP);
+        //enemyHUD.SetHP(enemyUnit.currentHP);
         dialogueText.text = "The attack was successful";
 
         yield return new WaitForSeconds(2f);
@@ -155,7 +155,7 @@ public class BattleSystem : MonoBehaviour
         bool isDead =  playerUnit.TakeDamage(enemyUnit.damage);
 
         // update playerHUD
-        // playerHUD.SetHP(playerUnit.currentHP);
+         playerHUD.SetHP(playerUnit.currentHP/playerUnit.maxHP);
 
         yield return new WaitForSeconds(1f);
 
@@ -176,11 +176,16 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.WON)
         {
             dialogueText.text = "You won the battle!";
+            // update mainmanager XP
+            // set DoorID to combat won before changing scenes
         }
         else if (state == BattleState.LOST)
         {
             dialogueText.text = "You were defeated";
+            // set DoorID to level_enter before changing scenes
         }
+
+        // change scenes outside of conditional
     }
 
 

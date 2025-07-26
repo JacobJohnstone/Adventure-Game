@@ -15,36 +15,36 @@ public class PlayerHud : MonoBehaviour
     [SerializeField]
     GameObject fallbackText;
 
-    Text nameText;
-    Text levelText;
+    //Text nameText;
+    //Text levelText;
 
     [SerializeField]
     Slider hpSlider;
+    [SerializeField]
+    Text hpText;
+    [SerializeField]
+    Text manaText;
 
     void Start()
     {
-        // Read values from scriptable object
-        // I feel like they just work similar to .json files essentially tbh
-        // Read name, level, maxHP, currentHP, learnedSkillsArray(?)
-
-        hpSlider.maxValue = 1; // set to maxHP from scriptable object
-        hpSlider.value = 0.2f; // currentHP from scriptable object
+        hpSlider.maxValue = 1;
     }
 
     public void SetHUD(Unit unit)
     {
         //nameText.text = unit.unitName;
         //levelText.text = "Level " + unit.unitLevel;
-        //hpSlider.maxValue = unit.maxHP;
-        //hpSlider.value = unit.currentHP;
+        hpSlider.value = unit.currentHP/unit.maxHP;
+        hpText.text = "HP " + unit.currentHP + "/" + unit.maxHP;
+        manaText.text = "Mana " + unit.currentMana + "/" + unit.maxMana;
     }
 
-    public void setHP(int hp)
+    public void SetHP(int hp)
     {
         hpSlider.value = hp;
     }
 
-    // For UI Class selection/display
+    // For Class selection + Action selection UI
     #region
     public void OnMageButton()
     {

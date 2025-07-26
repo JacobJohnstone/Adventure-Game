@@ -790,6 +790,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341341111}
   m_CullTransparentMesh: 1
+--- !u!114 &360334102 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1787037857403326615, guid: bd5d6a6104b6cee4ab742f2a92365304, type: 3}
+  m_PrefabInstance: {fileID: 2323407076352999230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &405758923
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,7 +910,7 @@ MonoBehaviour:
   playerArea: {fileID: 1847168095}
   enemyArea: {fileID: 875267991}
   dialogueText: {fileID: 642040619}
-  playerHUD: {fileID: 0}
+  playerHUD: {fileID: 1252471073}
 --- !u!4 &408614626
 Transform:
   m_ObjectHideFlags: 0
@@ -2566,6 +2577,8 @@ MonoBehaviour:
   tankOptions: {fileID: 1785244637}
   fallbackText: {fileID: 1805612400}
   hpSlider: {fileID: 291238303}
+  hpText: {fileID: 360334102}
+  manaText: {fileID: 1588977054}
 --- !u!1 &1375086202
 GameObject:
   m_ObjectHideFlags: 0
