@@ -446,6 +446,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269429642}
   m_CullTransparentMesh: 1
+--- !u!114 &291238303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 974910934429912524, guid: bd5d6a6104b6cee4ab742f2a92365304, type: 3}
+  m_PrefabInstance: {fileID: 2323407076352999230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &301700614
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +539,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 301700617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1252471073}
+        m_TargetAssemblyTypeName: PlayerHud, Assembly-CSharp
+        m_MethodName: OnMageButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &301700617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1284,7 +1307,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 726511099}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1252471073}
+        m_TargetAssemblyTypeName: PlayerHud, Assembly-CSharp
+        m_MethodName: OnTankButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &726511099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2525,7 +2560,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c66e53161c6cf44f8076f8c0c2b1689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
+  classOptions: {fileID: 921746628}
+  mageOptions: {fileID: 24163273}
+  fighterOptions: {fileID: 1189754956}
+  tankOptions: {fileID: 1785244637}
+  fallbackText: {fileID: 1805612400}
+  hpSlider: {fileID: 291238303}
 --- !u!1 &1375086202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,7 +3086,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1633861271}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1252471073}
+        m_TargetAssemblyTypeName: PlayerHud, Assembly-CSharp
+        m_MethodName: OnFighterButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1633861271
 MonoBehaviour:
   m_ObjectHideFlags: 0

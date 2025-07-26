@@ -47,7 +47,7 @@ public class BattleSystem : MonoBehaviour
 
         // Drag the canvas text element you want to display the name of the enemy
         dialogueText.text = enemyUnit.unitName + " has approached!";
-        playerHUD.SetHUD(playerUnit);
+        //playerHUD.SetHUD(playerUnit);
 
         yield return new WaitForSeconds(2f);
 

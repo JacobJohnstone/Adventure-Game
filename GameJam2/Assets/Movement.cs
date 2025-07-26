@@ -22,6 +22,10 @@ public class Movement : MonoBehaviour
     private float horizontal;
     private bool canMove;
 
+    public void Awake()
+    {
+        
+    }
     public void Start()
     {
         Scene activeScene = SceneManager.GetActiveScene();
@@ -68,6 +72,17 @@ public class Movement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+    }
+
+    public void Sprint(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            speed *= 2;
+        } else
+        {
+            speed = 10;
+        }
     }
 
     #endregion
