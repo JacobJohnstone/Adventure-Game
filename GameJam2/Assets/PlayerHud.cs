@@ -34,7 +34,7 @@ public class PlayerHud : MonoBehaviour
     {
         //nameText.text = unit.unitName;
         //levelText.text = "Level " + unit.unitLevel;
-        hpSlider.value = unit.currentHP/unit.maxHP;
+        hpSlider.value = (float)unit.currentHP/unit.maxHP;
         hpText.text = "HP " + unit.currentHP + "/" + unit.maxHP;
         manaText.text = "Mana " + unit.currentMana + "/" + unit.maxMana;
     }
