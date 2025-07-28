@@ -22,5 +22,7 @@ public class Spawner2 : MonoBehaviour
         {
             Instantiate(playerPrefab, winCombatSpawn);
         }
+
+        StartCoroutine(SceneTransition.instance.TransitionIn());
     }
 }

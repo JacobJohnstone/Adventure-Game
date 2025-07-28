@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1621442052353696557}
   - component: {fileID: 3839803950782669150}
-  - component: {fileID: 5710398574460231358}
   - component: {fileID: 7269582778577461974}
   - component: {fileID: 6533254891527213552}
+  - component: {fileID: 2557291766400135233}
   m_Layer: 0
   m_Name: Enemy1_0
   m_TagString: Untagged
@@ -90,23 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5710398574460231358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4005413759639436747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0855c19dcc548748b68cb94400e4f2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitName: Boss
-  unitLevel: 1
-  damage: 2
-  maxHP: 10
-  currentHP: 10
 --- !u!50 &7269582778577461974
 Rigidbody2D:
   serializedVersion: 5
@@ -180,3 +163,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.5, y: 2.625}
   m_EdgeRadius: 0
+--- !u!114 &2557291766400135233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4005413759639436747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2facb0f023d5c73478931c8277b0a673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaknesses: 
+  resistances: 
+  damage: 8
+  unitName: Timothy
+  maxHP: 7
+  currentHP: 7

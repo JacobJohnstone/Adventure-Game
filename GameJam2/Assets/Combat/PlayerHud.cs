@@ -1,6 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+
+    Things to change:
+        - Setup player level and name UI elements
+        - 
+
+ */
+
 public class PlayerHud : MonoBehaviour
 {
     [Header("UI Objects")]
@@ -21,6 +29,8 @@ public class PlayerHud : MonoBehaviour
     [SerializeField]
     Slider hpSlider;
     [SerializeField]
+    Slider manaSlider;
+    [SerializeField]
     Text hpText;
     [SerializeField]
     Text manaText;
@@ -28,20 +38,28 @@ public class PlayerHud : MonoBehaviour
     void Start()
     {
         hpSlider.maxValue = 1;
+        manaSlider.maxValue = 1;
     }
 
-    public void SetHUD(Unit unit)
+    public void SetHUD(PlayerUnit unit)
     {
         //nameText.text = unit.unitName;
         //levelText.text = "Level " + unit.unitLevel;
         hpSlider.value = (float)unit.currentHP/unit.maxHP;
         hpText.text = "HP " + unit.currentHP + "/" + unit.maxHP;
+        manaSlider.value = (float)unit.currentMana/unit.maxMana;
         manaText.text = "Mana " + unit.currentMana + "/" + unit.maxMana;
     }
 
-    public void SetHP(int hp)
+    public void SetHP(float hp, int currentHP, int maxHP)
     {
+        if (hp < 0)
+        {
+            hp = 0;
+            currentHP = 0;
+        };
         hpSlider.value = hp;
+        hpText.text = "HP " + currentHP + "/" + maxHP;
     }
 
     // For Class selection + Action selection UI
@@ -69,9 +87,13 @@ public class PlayerHud : MonoBehaviour
         if(state != BattleState.PLAYERTURN)
         {
             classOptions.SetActive(false);
+            tankOptions.SetActive(false);
+            fighterOptions.SetActive(false);
+            mageOptions.SetActive(false);
             fallbackText.SetActive(true);
         } else
         {
+            classOptions.SetActive(true);
             fallbackText.SetActive(false);
         }
     }

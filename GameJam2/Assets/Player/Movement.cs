@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,9 @@ public class Movement : MonoBehaviour
 
     [Header("Player Settings")]
     [SerializeField] float speed;
+    [SerializeField] float acceleration;
     [SerializeField] float jumpPower;
+
 
     [Header("Grounding")]
     [SerializeField] LayerMask groundLayer;
@@ -18,21 +21,53 @@ public class Movement : MonoBehaviour
     [SerializeField] float castDistance;
 
     private float horizontal;
-    private bool canMove;
+    private float sprintSpeed;
+    private float maxSpeed;
 
-    public void Awake()
+    private InputSystem_Actions controls;
+
+    private void Awake()
     {
-        
+        controls = new InputSystem_Actions();
     }
+
     public void Start()
     {
         Scene activeScene = SceneManager.GetActiveScene();
-        canMove = activeScene.name != "Combat";
+        sprintSpeed = speed + 5;
+        maxSpeed = speed;
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
+    }
+
+    private void Update()
+    {
+        horizontal = controls.FindAction("Move").ReadValue<Vector2>().x;
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2 (horizontal * speed, rb.linearVelocityY);
+        float targetSpeed = horizontal * speed;
+        float speedDiff = targetSpeed - rb.linearVelocityX;
+        float force = speedDiff * acceleration;
+        if (!IsGrounded())
+        {
+            force = force / 2;
+        }
+        rb.AddForce(Vector2.right * force);
+
+        if(Mathf.Abs(rb.linearVelocityX) > speed)
+        {
+            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocityY);
+        }
     }
 
 
@@ -40,7 +75,7 @@ public class Movement : MonoBehaviour
     #region PLAYER_CONTROLS
     public void Move(InputAction.CallbackContext context)
     {
-        if (canMove)
+        if (MainManager.instance.canMove)
         {
             horizontal = context.ReadValue<Vector2>().x;
         }
@@ -48,7 +83,7 @@ public class Movement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if(context.performed && IsGrounded() && canMove)
+        if(context.performed && IsGrounded() && MainManager.instance.canMove)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
         }
@@ -74,15 +109,15 @@ public class Movement : MonoBehaviour
 
     public void Sprint(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.performed && IsGrounded())
         {
-            speed *= 2;
+            speed = sprintSpeed;
         } else
         {
-            speed = 10;
+            speed = maxSpeed;
         }
     }
-
+    
     #endregion
 
 }

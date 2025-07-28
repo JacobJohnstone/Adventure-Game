@@ -12,10 +12,10 @@ public class Spawner : MonoBehaviour
 
         if(targetID == DoorIDs.returnLevel0)
         {
-            Instantiate(playerPrefab, doorSpawn);
+            //Instantiate(playerPrefab, doorSpawn);
         } else
         {
-            Instantiate(playerPrefab, initialSpawn);
+            //Instantiate(playerPrefab, initialSpawn);
         }
     }
 

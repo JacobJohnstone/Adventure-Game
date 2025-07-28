@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /*
@@ -25,14 +27,16 @@ public class BattleSystem : MonoBehaviour
 
     public Text dialogueText;
 
-    Unit playerUnit;
-    Unit enemyUnit;
+    PlayerUnit playerUnit;
+    EnemyUnit enemyUnit;
     
     public PlayerHud playerHUD;
+    public EnemyHud enemyHUD;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        StartCoroutine(SceneTransition.instance.TransitionIn());
         state = BattleState.START;
         StartCoroutine(SetupBattle());
     }
@@ -41,13 +45,14 @@ public class BattleSystem : MonoBehaviour
     {
         // Still have to create the enemy prefab, probably adjust the player one as well. Don't want to get too far without at least some art
         GameObject playerGO = Instantiate(playerCombatPrefab, playerArea);
-        playerUnit = playerGO.GetComponent<Unit>();
+        playerUnit = playerGO.GetComponent<PlayerUnit>();
         GameObject enemyGO  = Instantiate(enemyCombatPrefab, enemyArea);
-        enemyUnit = enemyGO.GetComponent<Unit>();
+        enemyUnit = enemyGO.GetComponent<EnemyUnit>();
 
         // Drag the canvas text element you want to display the name of the enemy
         dialogueText.text = enemyUnit.unitName + " has approached!";
         playerHUD.SetHUD(playerUnit);
+        enemyHUD.SetHUD(enemyUnit);
 
         yield return new WaitForSeconds(2f);
 
@@ -60,12 +65,21 @@ public class BattleSystem : MonoBehaviour
         dialogueText.text = playerUnit.name + ", your turn!";
     }
 
-    public void OnAttackButton()
+    public void OnAttackButton(string attackStr)
     {
         if (state != BattleState.PLAYERTURN)
             return;
-        
-        StartCoroutine (PlayerAttack());
+
+        if(Enum.TryParse(attackStr, true, out PlayerAttacks attack))
+        {
+            Debug.Log(attackStr + " used: " + attack);
+            playerHUD.OnStateUpdate(BattleState.ENEMYTURN);
+            StartCoroutine(PlayerAttack(attack));
+        } 
+        else
+        {
+            Debug.LogWarning("Invalid attack type: " + attackStr);
+        }
     }
 
     public void OnHealButton()
@@ -73,17 +87,21 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
 
+        playerHUD.OnStateUpdate(BattleState.ENEMYTURN);
         StartCoroutine(PlayerHeal());
     }
 
-    IEnumerator PlayerAttack()
+    IEnumerator PlayerAttack(PlayerAttacks attack)
     {
-        // check hit based on accuracy
         // damage the enemy, TakeDamage() returns a bool depending if the attack kills or not
-        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
+        int damage = playerUnit.attackMap[attack].getDamage();
+        AttackTypes damageType = playerUnit.attackMap[attack].getType();
+        bool isDead = enemyUnit.TakeDamage(damage, damageType);
+        // update playerHUD
+        enemyHUD.SetHP((float)enemyUnit.currentHP / enemyUnit.maxHP, enemyUnit.currentHP, enemyUnit.maxHP);
 
         // update UI
-        //enemyHUD.SetHP(enemyUnit.currentHP);
+        // enemyHUD.SetHP(enemyUnit.currentHP);
         dialogueText.text = "The attack was successful";
 
         yield return new WaitForSeconds(2f);
@@ -93,12 +111,20 @@ public class BattleSystem : MonoBehaviour
         {
             // end the battle
             state = BattleState.WON;
-            EndBattle();
+            StartCoroutine(EndBattle());
         } else
         {
             // enemy dialogue change would go here, then a WaitForSeconds or something
+            dialogueText.text = "You did " + damage + " damage!";
+
+            yield return new WaitForSeconds(2f);
+
+            dialogueText.text = "It's " + enemyUnit.name + "'s turn!";
+
+            yield return new WaitForSeconds(2f);
             // enemy turn
             state = BattleState.ENEMYTURN;
+            playerHUD.OnStateUpdate(state);
             EnemyTurn();
         }
 
@@ -116,13 +142,14 @@ public class BattleSystem : MonoBehaviour
         // Update enemy HUD -- health bar
 
         state = BattleState.ENEMYTURN;
+        playerHUD.OnStateUpdate(state);
         EnemyTurn();
     }
 
     void EnemyTurn()
     {
         // attack, heal, block, etc.?
-        if(enemyUnit.currentHP < enemyUnit.maxHP)
+        if(false && enemyUnit.currentHP < enemyUnit.maxHP)
         {
             StartCoroutine(EnemyHeal());
         } else if (false)
@@ -147,6 +174,7 @@ public class BattleSystem : MonoBehaviour
         // Update enemy HUD -- health bar
 
         state = BattleState.PLAYERTURN;
+        playerHUD.OnStateUpdate(state);
         PlayerTurn();
     }
 
@@ -155,37 +183,94 @@ public class BattleSystem : MonoBehaviour
         bool isDead =  playerUnit.TakeDamage(enemyUnit.damage);
 
         // update playerHUD
-         playerHUD.SetHP(playerUnit.currentHP/playerUnit.maxHP);
+        playerHUD.SetHP((float)playerUnit.currentHP/playerUnit.maxHP, playerUnit.currentHP, playerUnit.maxHP);
 
-        yield return new WaitForSeconds(1f);
+        dialogueText.text = "The enemy did " + enemyUnit.damage + " damage!";
+
+        yield return new WaitForSeconds(2f);
 
         if(isDead)
         {
             state = BattleState.LOST;
-            EndBattle();
+            StartCoroutine(EndBattle());
         } else
         {
             state = BattleState.PLAYERTURN;
+            playerHUD.OnStateUpdate(state);
             PlayerTurn();
         }
-
     }
 
-    void EndBattle()
+    IEnumerator EndBattle()
     {
         if(state == BattleState.WON)
         {
             dialogueText.text = "You won the battle!";
+            yield return new WaitForSeconds(2f);
             // update mainmanager XP
+            // update mainmanager hp
+            MainManager.instance.currentHP = playerUnit.currentHP;
             // set DoorID to combat won before changing scenes
+            SceneSpawns.instance.UpdateDoorID(DoorIDs.wonLevel1Combat);
         }
         else if (state == BattleState.LOST)
         {
             dialogueText.text = "You were defeated";
+            yield return new WaitForSeconds(2f);
+
             // set DoorID to level_enter before changing scenes
+            SceneSpawns.instance.UpdateDoorID(DoorIDs.enterLevel1);
         }
 
         // change scenes outside of conditional
+        string currentLevel = SceneSpawns.instance.currentLevel.ToString();
+        SceneManager.LoadScene(currentLevel, LoadSceneMode.Single);
+    }
+
+    void GetDoorSpawn()
+    {
+        Levels returningLevel = SceneSpawns.instance.currentLevel;
+
+        switch (returningLevel)
+        {
+            case Levels.level_1: {
+                    if(state != BattleState.WON)
+                    {
+                        SceneSpawns.instance.UpdateDoorID(DoorIDs.enterLevel1);
+                    } else
+                    {
+                        SceneSpawns.instance.UpdateDoorID(DoorIDs.wonLevel1Combat);
+                    }
+                    break;
+                }
+            case Levels.level_2:
+                {
+                    if (state != BattleState.WON)
+                    {
+                        SceneSpawns.instance.UpdateDoorID(DoorIDs.enterLevel2);
+                    }
+                    else
+                    {
+                        SceneSpawns.instance.UpdateDoorID(DoorIDs.wonLevel2Combat);
+                    }
+                    break;
+                }
+            case Levels.level_3:
+                {
+                    //if (state != BattleState.WON)
+                    SceneSpawns.instance.UpdateDoorID(DoorIDs.enterLevel3);
+                    
+                    // else => final scene/cutscene thing for winning game?
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("[BattleSystem -> GetDoorSpawn()]: This was probably a mistake (default switch statement block).");
+                    SceneSpawns.instance.UpdateDoorID(DoorIDs.returnLevel0);
+                    break;
+                }
+        }
+
     }
 
 
