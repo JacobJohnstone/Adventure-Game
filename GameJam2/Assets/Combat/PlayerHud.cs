@@ -21,6 +21,8 @@ public class PlayerHud : MonoBehaviour
     [SerializeField]
     GameObject tankOptions;
     [SerializeField]
+    GameObject targetOptions;
+    [SerializeField]
     GameObject fallbackText;
 
     //Text nameText;
@@ -62,6 +64,12 @@ public class PlayerHud : MonoBehaviour
         hpText.text = "HP " + currentHP + "/" + maxHP;
     }
 
+    public void SetMana(int currentMana, int maxMana)
+    {
+        manaSlider.value =(float)currentMana/maxMana;
+        manaText.text = "Mana " + currentMana + "/" + maxMana;
+    }
+
     // For Class selection + Action selection UI
     #region
     public void OnMageButton()
@@ -82,6 +90,14 @@ public class PlayerHud : MonoBehaviour
         tankOptions.SetActive(true);
     }
 
+    public void ShowTargetOptions()
+    {
+        tankOptions.SetActive(false);
+        fighterOptions.SetActive(false);
+        mageOptions.SetActive(false);
+        targetOptions.SetActive(true);
+    }
+
     public void OnStateUpdate(BattleState state)
     {
         if(state != BattleState.PLAYERTURN)
@@ -90,6 +106,7 @@ public class PlayerHud : MonoBehaviour
             tankOptions.SetActive(false);
             fighterOptions.SetActive(false);
             mageOptions.SetActive(false);
+            targetOptions.SetActive(false);
             fallbackText.SetActive(true);
         } else
         {

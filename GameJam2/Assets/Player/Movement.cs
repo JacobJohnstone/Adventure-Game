@@ -8,12 +8,13 @@ public class Movement : MonoBehaviour
 
     [Header("Player Component References")]
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] Animator animator;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     [Header("Player Settings")]
     [SerializeField] float speed;
     [SerializeField] float acceleration;
     [SerializeField] float jumpPower;
-
 
     [Header("Grounding")]
     [SerializeField] LayerMask groundLayer;
@@ -60,7 +61,11 @@ public class Movement : MonoBehaviour
         float force = speedDiff * acceleration;
         if (!IsGrounded())
         {
+            animator.SetBool("isGrounded", false);
             force = force / 2;
+        } else
+        {
+            animator.SetBool("isGrounded", true);
         }
         rb.AddForce(Vector2.right * force);
 
@@ -68,6 +73,16 @@ public class Movement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocityY);
         }
+
+        if (rb.linearVelocityX < -0.1f)
+        {
+            spriteRenderer.flipX = true;
+        } else if (rb.linearVelocityX >= 0.1f) { 
+            spriteRenderer.flipX = false; 
+        }
+        animator.SetFloat("speed", Mathf.Abs(rb.linearVelocityX));
+        animator.SetFloat("yVelocity", rb.linearVelocityY);
+
     }
 
 
@@ -75,7 +90,7 @@ public class Movement : MonoBehaviour
     #region PLAYER_CONTROLS
     public void Move(InputAction.CallbackContext context)
     {
-        if (MainManager.instance.canMove)
+        if (MainManager.instance.canMove) //MainManager.instance.canMove
         {
             horizontal = context.ReadValue<Vector2>().x;
         }

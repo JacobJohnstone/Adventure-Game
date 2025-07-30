@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -8721824174492889679}
   - component: {fileID: -3802950899329632011}
   - component: {fileID: -8936682132078549161}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CombatPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 3}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -198,3 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f455584dcd4c04041a3fd86aecfcfdb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mage: {fileID: 0}
+  fighter: {fileID: 0}
+  tank: {fileID: 0}
+  fireballDamageText: {fileID: 0}
+  fireballManaText: {fileID: 0}

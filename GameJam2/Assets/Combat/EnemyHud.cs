@@ -1,15 +1,15 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class EnemyHud : MonoBehaviour
 {
-    [SerializeField]
-    Text nameText;
+
     [SerializeField]
     Slider hpSlider;
     [SerializeField]
-    Text hpText;
+    TextMeshProUGUI hpText;
 
 
     void Start()
@@ -19,7 +19,6 @@ public class EnemyHud : MonoBehaviour
 
     public void SetHUD(EnemyUnit unit)
     {
-        nameText.text = unit.unitName;
         hpSlider.value = (float)unit.currentHP / unit.maxHP;
         hpText.text = "HP " + unit.currentHP + "/" + unit.maxHP;
     }
