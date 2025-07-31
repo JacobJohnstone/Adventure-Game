@@ -9,19 +9,19 @@ public class playerInfoHud : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (MainManager.instance.xp > 400)
+        if (MainManager.instance.level > 4)
         {
             playerLevel = 5;
         }
-        else if (MainManager.instance.xp > 300)
+        else if (MainManager.instance.level > 3)
         {
             playerLevel = 4;
         }
-        else if (MainManager.instance.xp > 200)
+        else if (MainManager.instance.level > 2)
         {
             playerLevel = 3;
         }
-        else if (MainManager.instance.xp > 100)
+        else if (MainManager.instance.level > 1)
         {
             playerLevel = 2;
         }

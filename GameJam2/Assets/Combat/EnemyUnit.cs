@@ -1,16 +1,31 @@
 using UnityEngine;
 using System;
-
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class EnemyUnit : Unit
 {
-
     public AttackTypes[] weaknesses;
     public AttackTypes[] resistances;
-    public int damage;
     public new string unitName;
     public new int maxHP;
     public new int currentHP;
+    public bool isSmart = false;
+    public bool isPoisoned = false;
+    public int poisonedRoundsLeft = 0;
+
+    [HideInInspector]
+    public EnemyAttackObj queuedAttack = null;
+
+    int lastAttackIndex = -1;
+
+    [SerializeField]
+    public List<EnemyAttackObj> attackList = new List<EnemyAttackObj>();
+
+    private void Awake()
+    {
+        queuedAttack = null;
+    }
 
     // Overload considering attacks that might be strong or weak against a specific unit
     public bool TakeDamage(int damage, AttackTypes typeEffect)
@@ -33,6 +48,46 @@ public class EnemyUnit : Unit
             return true;
 
         return false;
+    }
+
+    public EnemyAttackObj PickAttack()
+    {
+        EnemyAttackObj attack;
+        
+        if(lastAttackIndex < 0)
+        {
+            attack = attackList[lastAttackIndex + 1];
+        }
+        else
+        {
+            attack = attackList[lastAttackIndex];
+        }
+
+        if (isSmart)
+        {
+
+        } 
+        else
+        {
+            Debug.Log("Picking attack because dumb");
+            // iterate through attack list
+            if (lastAttackIndex != attackList.Count - 1) { 
+                
+                // set attack
+                attack = attackList[lastAttackIndex + 1];
+                // increment attack index to the current attack
+                lastAttackIndex++;
+            } 
+            else
+            {
+                // We've reached the end of the attack list
+                attack = attackList[0];
+                lastAttackIndex = 0;
+            }
+
+        }
+
+        return attack;
     }
 
     // Util functions

@@ -9,10 +9,14 @@ public enum PlayerAttacks { FIREBALL, POISON, SHOCK, SLASH, PIERCE, DEFLECT, BAS
 
 public class PlayerUnit : Unit
 {
-    //[Header("Sprite Class Options")]
-    //public Sprite mage;
-    //public Sprite fighter;
-    //public Sprite tank;
+    [Header("Sprite Class Options")]
+    public Sprite mage;
+    public Sprite fighter;
+    public Sprite tank;
+
+    public SpriteRenderer spriteRenderer;
+
+    public PlayerHud playerHud;
 
     [System.NonSerialized] public int unitLevel;
     [System.NonSerialized] public int maxMana;
@@ -33,19 +37,19 @@ public class PlayerUnit : Unit
         isBlocking = false;
         currentClass = PlayerClasses.MAGE;
 
-        if (MainManager.instance.xp > 400)
+        if (MainManager.instance.level > 4)
         {
             unitLevel = 5;
         }
-        else if (MainManager.instance.xp > 300)
+        else if (MainManager.instance.level > 3)
         {
             unitLevel = 4;
         }
-        else if (MainManager.instance.xp > 200)
+        else if (MainManager.instance.level > 2)
         {
             unitLevel = 3;
         }
-        else if (MainManager.instance.xp > 100)
+        else if (MainManager.instance.level > 1)
         {
             unitLevel = 2;
         }
@@ -54,14 +58,21 @@ public class PlayerUnit : Unit
             unitLevel = 1;
         }
 
+        GameObject playerHudGO = GameObject.FindGameObjectWithTag("PlayerHud");
+        if (playerHudGO != null)
+        {
+            playerHud = playerHudGO.GetComponent<PlayerHud>();
+            playerHud.playerClass = currentClass;
+        }
+
         //FIREBALL, SPLASH, SHOCK, SLASH, PIERCE, DEFLECT, BASH
         attackMap.Add(PlayerAttacks.FIREBALL, new Attack(MainManager.instance.fireballDamage, AttackTypes.FIRE, MainManager.instance.fireballManaCost));
-        attackMap.Add(PlayerAttacks.POISON, new Attack(3, AttackTypes.POISON, 1));
-        attackMap.Add(PlayerAttacks.SHOCK, new Attack(4, AttackTypes.ELECTRIC, 2));
-        attackMap.Add(PlayerAttacks.SLASH, new Attack(7, AttackTypes.NORMAL));
-        attackMap.Add(PlayerAttacks.PIERCE, new Attack(2, AttackTypes.PIERCING));
-        attackMap.Add(PlayerAttacks.DEFLECT, new Attack(0, AttackTypes.NORMAL));
-        attackMap.Add(PlayerAttacks.BASH, new Attack(2, AttackTypes.FIRE));
+        attackMap.Add(PlayerAttacks.POISON, new Attack(MainManager.instance.poisonDamage, AttackTypes.POISON, MainManager.instance.poisonManaCost));
+        attackMap.Add(PlayerAttacks.SHOCK, new Attack(MainManager.instance.shockDamage, AttackTypes.ELECTRIC, MainManager.instance.shockManaCost));
+        attackMap.Add(PlayerAttacks.SLASH, new Attack(MainManager.instance.slashDamage, AttackTypes.NORMAL));
+        attackMap.Add(PlayerAttacks.PIERCE, new Attack(MainManager.instance.pierceDamage, AttackTypes.PIERCING));
+        attackMap.Add(PlayerAttacks.DEFLECT, new Attack(MainManager.instance.deflectDamage, AttackTypes.NORMAL));
+        attackMap.Add(PlayerAttacks.BASH, new Attack(MainManager.instance.bashDamage, AttackTypes.FIRE));
     }
 
     public void SetClass(string playerClass)
@@ -70,17 +81,20 @@ public class PlayerUnit : Unit
         {
             case "mage":
                 {
+                    spriteRenderer.sprite = mage;
                     currentClass = PlayerClasses.MAGE;
                     break;
                 }
             case "tank":
                 {
                     Debug.Log("Now a tank");
+                    spriteRenderer.sprite = tank;
                     currentClass = PlayerClasses.TANK;
                     break;
                 }
             default:
                 {
+                    spriteRenderer.sprite = fighter;
                     currentClass = PlayerClasses.FIGHTER;
                     break;
                 }

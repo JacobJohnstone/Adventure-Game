@@ -178,10 +178,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaknesses: 
   resistances: 
-  damage: 8
   unitName: Timothy
   maxHP: 7
   currentHP: 7
+  attackList: []
 --- !u!1001 &1564326642390341278
 PrefabInstance:
   m_ObjectHideFlags: 0

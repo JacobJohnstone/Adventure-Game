@@ -192,15 +192,15 @@ MonoBehaviour:
   timelineDirector: {fileID: 13068149}
   dialogueText: {fileID: 869440887}
   dialogueStrings:
-  - 'Greg: Hey there traveler! We were just looking for out final party member! Care
-    to join u-'
+  - 'Party: Hey there traveler! We were just looking for out final party member!
+    Care to join u-'
   - I work alone.
-  - 'Greg: Well uhh thyis cave here is where the Mighty Ogre keeps his hoard of riches-'
+  - 'Party: Well uhh this cave here is where the Mighty Ogre keeps his hoard of riches-'
   - Riches eh? Looks like im going in.
-  - 'Greg: This place is protected by the Ogres fierce Gremlins and brolic Goblins!
+  - 'Party: This place is protected by the Ogres fierce Gremlins and brolic Goblins!
     Surely you don''t plan on taking them on by yourself?'
   - I'll be just fine.
-  - 'Greg: You''ll need a balanced party of people with various skills and abilities
+  - 'Party: You''ll need a balanced party of people with various skills and abilities
     to get through! You can''t possibly survive on your own you must not enter!'
 --- !u!114 &13068152
 MonoBehaviour:
@@ -720,8 +720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00098419, y: 0.000045776367}
-  m_SizeDelta: {x: 533.23, y: 55.28}
+  m_AnchoredPosition: {x: 0.000013351, y: 0.0000053222}
+  m_SizeDelta: {x: 491.807, y: 55.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1120148915
 GameObject:
@@ -6257,6 +6257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1939411732}
   - component: {fileID: 1939411731}
+  - component: {fileID: 1939411733}
   m_Layer: 0
   m_Name: Cutscene_0
   m_TagString: Untagged
@@ -6304,6 +6305,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1939411733
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939411730}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a59510dd49cac2e4a9b71fcae277e689, type: 3}
+  m_Resource: {fileID: 8300000, guid: a59510dd49cac2e4a9b71fcae277e689, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &423012408257409973
 PrefabInstance:
   m_ObjectHideFlags: 0

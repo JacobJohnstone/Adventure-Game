@@ -23,10 +23,27 @@ public class PlayerHud : MonoBehaviour
     [SerializeField]
     GameObject targetOptions;
     [SerializeField]
+    GameObject target1;
+    [SerializeField]
+    GameObject target2;
+    [SerializeField]
+    GameObject target3;
+    [SerializeField]
     GameObject fallbackText;
+    [SerializeField]
+    GameObject fireballContainer;
+    [SerializeField]
+    GameObject poisonContainer;
+    [SerializeField]
+    GameObject SlashContainer;
 
     //Text nameText;
     //Text levelText;
+    public PlayerClasses playerClass = PlayerClasses.MAGE;
+    int level;
+    bool hasSpellBook;
+
+    PlayerUnit playerUnit;
 
     [SerializeField]
     Slider hpSlider;
@@ -37,13 +54,23 @@ public class PlayerHud : MonoBehaviour
     [SerializeField]
     Text manaText;
 
+    int startingEnemyCount = 3;
+
     void Start()
     {
         hpSlider.maxValue = 1;
         manaSlider.maxValue = 1;
+        hasSpellBook = MainManager.instance.foundSpellBook;
+
+        GameObject playerUnitGO = GameObject.FindGameObjectWithTag("PlayerUnit");
+        if (playerUnitGO != null)
+        {
+            playerUnit = playerUnitGO.GetComponent<PlayerUnit>();
+        }
+        level = MainManager.instance.level;
     }
 
-    public void SetHUD(PlayerUnit unit)
+    public void SetHUD(PlayerUnit unit, int numOfEnemies)
     {
         //nameText.text = unit.unitName;
         //levelText.text = "Level " + unit.unitLevel;
@@ -51,6 +78,7 @@ public class PlayerHud : MonoBehaviour
         hpText.text = "HP " + unit.currentHP + "/" + unit.maxHP;
         manaSlider.value = (float)unit.currentMana/unit.maxMana;
         manaText.text = "Mana " + unit.currentMana + "/" + unit.maxMana;
+        startingEnemyCount = numOfEnemies;
     }
 
     public void SetHP(float hp, int currentHP, int maxHP)
@@ -74,28 +102,85 @@ public class PlayerHud : MonoBehaviour
     #region
     public void OnMageButton()
     {
+        playerUnit.SetClass("mage");
         classOptions.SetActive(false);
         mageOptions.SetActive(true);
+        if (hasSpellBook)
+        {
+            fireballContainer.SetActive(true);
+        } else
+        {
+            fireballContainer.SetActive(false);
+        }
+
+        if(level > 1)
+        {
+            poisonContainer.SetActive(true);
+        } else
+        {
+            poisonContainer.SetActive(false);
+        }
     }
 
     public void OnFighterButton()
     {
+        playerUnit.SetClass("fighter");
         classOptions.SetActive(false);
         fighterOptions.SetActive(true);
+        if(level > 3)
+        {
+            SlashContainer.SetActive(true);
+        } else
+        {
+            SlashContainer.SetActive(false);
+        }
     }
 
     public void OnTankButton()
     {
+        playerUnit.SetClass("tank");
         classOptions.SetActive(false);
         tankOptions.SetActive(true);
     }
 
-    public void ShowTargetOptions()
+    public void ShowTargetOptions(int targetsLeft)
     {
+        //fireballContainer.SetActive(false);
+        //poisonContainer.SetActive(false);
         tankOptions.SetActive(false);
         fighterOptions.SetActive(false);
         mageOptions.SetActive(false);
         targetOptions.SetActive(true);
+        SetTargetAmount(targetsLeft);
+    }
+
+    public void SetTargetAmount(int targetsLeft)
+    {
+
+        switch (targetsLeft)
+        {
+            case 1:
+                {
+                    target1.SetActive(true);
+                    target2.SetActive(false);
+                    target3.SetActive(false);
+                    break;
+                }
+            case 2:
+                {
+                    target1.SetActive(true);
+                    target2.SetActive(true);
+                    target3.SetActive(false);
+                    break;
+                }
+            case 3:
+                {
+                    target1.SetActive(true);
+                    target2.SetActive(true);
+                    target3.SetActive(true);
+                    break;
+                }
+        }
     }
 
     public void OnStateUpdate(BattleState state)
@@ -107,6 +192,9 @@ public class PlayerHud : MonoBehaviour
             fighterOptions.SetActive(false);
             mageOptions.SetActive(false);
             targetOptions.SetActive(false);
+            target1.SetActive(false);
+            target2.SetActive(false);
+            target3.SetActive(false);
             fallbackText.SetActive(true);
         } else
         {

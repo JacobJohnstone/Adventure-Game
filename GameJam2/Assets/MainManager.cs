@@ -4,14 +4,13 @@ public class MainManager : MonoBehaviour
 {
     public static MainManager instance;
 
-
     Transform nextSpawn;
 
     // Player stats
-    [System.NonSerialized] public int maxHP = 100;
-    [System.NonSerialized] public int currentHP = 100;
+    [System.NonSerialized] public int maxHP = 20;
+    [System.NonSerialized] public int currentHP = 20;
     [System.NonSerialized] public int maxMana = 20; // regain 10 per turn
-    [System.NonSerialized] public int xp = 0;
+    [System.NonSerialized] public int level = 3;
 
     [System.NonSerialized] public bool canMove = true;
 
@@ -24,14 +23,14 @@ public class MainManager : MonoBehaviour
 
     [System.NonSerialized] public int slashDamage = 7;
     [System.NonSerialized] public int pierceDamage = 2;
-    [System.NonSerialized] public int deflectDamage = 0;
+    [System.NonSerialized] public int deflectDamage = 5;
     [System.NonSerialized] public int bashDamage = 2;
 
-
-
+    [System.NonSerialized] public int missChance = 15; // out of 100 (20 = 20% miss chance)
+    [System.NonSerialized] public int poisonDuration = 2;
 
     // Extra potential uses
-    public bool foundSpellBook;
+    public bool foundSpellBook = false;
 
     private void Awake()
     {
@@ -45,6 +44,26 @@ public class MainManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
     }
+
+    public void levelUp (int level)
+    {
+        // switch statment,
+        // on each level, adjust damages for abilities, lower miss chance, increase poison duration
+        switch (level) {
+            case 2:
+                {
+                    missChance = 10;
+                    break;
+                }
+            case 3: { 
+                    missChance = 5;
+                    break;
+                }
+        
+        }
+
+    }
+
 }
 
 
