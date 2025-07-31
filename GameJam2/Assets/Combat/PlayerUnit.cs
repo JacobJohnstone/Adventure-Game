@@ -58,6 +58,8 @@ public class PlayerUnit : Unit
             unitLevel = 1;
         }
 
+        MainManager.instance.currentMana = maxMana;
+
         GameObject playerHudGO = GameObject.FindGameObjectWithTag("PlayerHud");
         if (playerHudGO != null)
         {
@@ -110,6 +112,8 @@ public class PlayerUnit : Unit
             currentMana = 0;
         }
 
+        MainManager.instance.currentMana = currentMana;
+
         return currentMana;
 
     }
@@ -122,6 +126,9 @@ public class PlayerUnit : Unit
         {
             currentMana = maxMana;
         }
+
+        MainManager.instance.currentMana = currentMana;
+
 
         return currentMana;
 

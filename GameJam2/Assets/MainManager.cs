@@ -9,17 +9,18 @@ public class MainManager : MonoBehaviour
     // Player stats
     [System.NonSerialized] public int maxHP = 20;
     [System.NonSerialized] public int currentHP = 20;
-    [System.NonSerialized] public int maxMana = 20; // regain 10 per turn
+    [System.NonSerialized] public int maxMana = 4; // regain 1 per turn
+    [System.NonSerialized] public int currentMana = 4;
     [System.NonSerialized] public int level = 3;
 
     [System.NonSerialized] public bool canMove = true;
 
-    [System.NonSerialized] public int fireballDamage = 5;
+    [System.NonSerialized] public int fireballDamage = 15;
     [System.NonSerialized] public int fireballManaCost = 3;
-    [System.NonSerialized] public int poisonDamage = 3;
-    [System.NonSerialized] public int poisonManaCost = 1;
+    [System.NonSerialized] public int poisonDamage = 2;
+    [System.NonSerialized] public int poisonManaCost = 3;
     [System.NonSerialized] public int shockDamage = 4;
-    [System.NonSerialized] public int shockManaCost = 2;
+    [System.NonSerialized] public int shockManaCost = 1;
 
     [System.NonSerialized] public int slashDamage = 7;
     [System.NonSerialized] public int pierceDamage = 2;
@@ -52,11 +53,19 @@ public class MainManager : MonoBehaviour
         switch (level) {
             case 2:
                 {
-                    missChance = 10;
+                    missChance = 13;
+                    poisonDamage = 3;
+                    shockDamage = 5;
+                    maxMana = 6;
+                    maxHP = 40;
                     break;
                 }
             case 3: { 
-                    missChance = 5;
+                    missChance = 10;
+                    poisonDamage = 4;
+                    shockDamage = 6;
+                    maxMana = 8;
+                    maxHP = 60;
                     break;
                 }
         
@@ -65,12 +74,3 @@ public class MainManager : MonoBehaviour
     }
 
 }
-
-
-//attackMap.Add(PlayerAttacks.FIREBALL, new Attack(5, AttackTypes.FIRE, 3));
-//attackMap.Add(PlayerAttacks.POISON, new Attack(3, AttackTypes.POISON, 1));
-//attackMap.Add(PlayerAttacks.SHOCK, new Attack(4, AttackTypes.ELECTRIC, 2));
-//attackMap.Add(PlayerAttacks.SLASH, new Attack(7, AttackTypes.NORMAL));
-//attackMap.Add(PlayerAttacks.PIERCE, new Attack(2, AttackTypes.PIERCING));
-//attackMap.Add(PlayerAttacks.DEFLECT, new Attack(0, AttackTypes.NORMAL));
-//attackMap.Add(PlayerAttacks.BASH, new Attack(2, AttackTypes.FIRE));

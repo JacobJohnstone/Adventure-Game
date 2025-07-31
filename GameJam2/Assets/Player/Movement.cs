@@ -24,6 +24,8 @@ public class Movement : MonoBehaviour
     private float horizontal;
     private float sprintSpeed;
     private float maxSpeed;
+    private bool sprintHeld;
+
 
     private InputSystem_Actions controls;
 
@@ -66,6 +68,7 @@ public class Movement : MonoBehaviour
         } else
         {
             animator.SetBool("isGrounded", true);
+            speed = sprintHeld ? sprintSpeed : maxSpeed;
         }
         rb.AddForce(Vector2.right * force);
 
@@ -124,13 +127,27 @@ public class Movement : MonoBehaviour
 
     public void Sprint(InputAction.CallbackContext context)
     {
-        if(context.performed && IsGrounded())
+        //if(context.performed && IsGrounded())
+        //{
+        //    speed = sprintSpeed;
+        //} else
+        //{
+        //    speed = maxSpeed;
+        //}
+
+    
+        if (context.started)
         {
-            speed = sprintSpeed;
-        } else
+            sprintHeld = true;
+            if (IsGrounded())
+                speed = sprintSpeed;
+        }
+        else if (context.canceled)
         {
+            sprintHeld = false;
             speed = maxSpeed;
         }
+   
     }
     
     #endregion

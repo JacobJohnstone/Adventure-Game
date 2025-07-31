@@ -179,8 +179,8 @@ MonoBehaviour:
   weaknesses: 
   resistances: 
   unitName: Golem
-  maxHP: 15
-  currentHP: 15
+  maxHP: 25
+  currentHP: 25
   isSmart: 0
   isPoisoned: 0
   poisonedRoundsLeft: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   - damage: 10
     needsToCharge: 1
     turnRequired: 0
-  - damage: 2
+  - damage: 6
     needsToCharge: 0
     turnRequired: 0
 --- !u!1001 &8874354469470879153

@@ -162,7 +162,14 @@ public class BattleSystem : MonoBehaviour
         // damage the enemy, TakeDamage() returns a bool depending if the attack kills or not
         EnemyUnit attackTarget = enemyUnits[targetIndex];
         // update playerHUD
-        dialogueText.text = "You used " + attack;
+        if(attack == PlayerAttacks.DEFLECT)
+        {
+            dialogueText.text = "You used CRUSH";
+        } else
+        {
+            dialogueText.text = "You used " + attack;
+        }
+        
         yield return new WaitForSeconds(dialoguePause);
 
         bool isDead = false;
@@ -170,10 +177,12 @@ public class BattleSystem : MonoBehaviour
 
         if (damageType == AttackTypes.POISON)
         {
-            dialogueText.text = "The enemy is now poisoned!";
+            dialogueText.text = "The enemy is now poisoned for the next " + MainManager.instance.poisonDuration + " turns!";
             yield return new WaitForSeconds(dialoguePause);
             attackTarget.isPoisoned = true;
             attackTarget.poisonedRoundsLeft = MainManager.instance.poisonDuration;
+            isDead = attackTarget.TakeDamage(damage, damageType);
+            enemyHuds[targetIndex].SetHP((float)attackTarget.currentHP / attackTarget.maxHP, attackTarget.currentHP, attackTarget.maxHP);
         } else
         {
             int chanceHit = Random.Range(0, 101);
@@ -266,36 +275,7 @@ public class BattleSystem : MonoBehaviour
                 continue;
             }
 
-            if(enemyUnits[i].isPoisoned)
-            {
-                dialogueText.text = "The enemy is poisoned!";
-                yield return new WaitForSeconds(dialoguePause);
-                bool poisonKilled = enemyUnits[i].TakeDamage(playerUnit.attackMap[PlayerAttacks.POISON].getDamage());
-                enemyHuds[i].SetHP((float)enemyUnits[i].currentHP / enemyUnits[i].maxHP, enemyUnits[i].currentHP, enemyUnits[i].maxHP);
-                enemyUnits[i].poisonedRoundsLeft--;
-                if (enemyUnits[i].poisonedRoundsLeft <= 0)
-                {
-                    enemyUnits[i].isPoisoned = false;
-                }
 
-                if (poisonKilled) {
-                    dialogueText.text = "That was a finishing blow!";
-                    yield return new WaitForSeconds(dialoguePause);
-                    Destroy(enemyUnits[i].gameObject);
-                    enemyUnits.RemoveAt(i);
-                    enemyHuds.RemoveAt(i);
-                    if (enemyUnits.Count <= 0)
-                    {
-                        // end the battle
-                        state = BattleState.WON;
-                        StartCoroutine(EndBattle());
-                    } else
-                    {
-                        // skip this enemy attacking, and move onto the next
-                        continue;
-                    }
-                }
-            }
 
             // Enemy attack dialogue and pause
             if(i == 0)
@@ -317,7 +297,6 @@ public class BattleSystem : MonoBehaviour
             // If the enemy has a charged attack, use that.
             if (currentEnemy.queuedAttack != null)
             {
-                Debug.Log("Why the hell we in here?");
                 enemyAttack = currentEnemy.queuedAttack;
                 usingChargedAttack = true;
                 currentEnemy.queuedAttack = null;
@@ -340,13 +319,10 @@ public class BattleSystem : MonoBehaviour
             {
                 // The enemy is charging, make sure even if they attack somehow, it does no damage to the player
                 // this is a safety fallback
-                Debug.Log("Entered 'enemyIsCharging' conditional");
                 damage = 0;
             } else
             {
-                Debug.Log("We here.. but why 0? " + enemyAttack);
                 damage = enemyAttack.damage;
-                Debug.Log("We here, damage: " + damage);
             }
 
             if (!playerUnit.isBlocking && !enemyIsCharging)
@@ -357,13 +333,13 @@ public class BattleSystem : MonoBehaviour
                 if (playerUnit.currentClass == PlayerClasses.TANK)
                 {
                     // Take less damage if you are the tank
-
-                    Debug.Log("Taking random dmg because you're a tank");
-                    int blockedDmg = Random.Range(0, 3); // if the player is on the tank role, block a random amount of damage, lowest block being 0, highest block being 2
-                    isDead = playerUnit.TakeDamage(damage - 2);
-                    dialogueText.text = "You blocked " + blockedDmg + " damage!";
+                    dialogueText.text = "You'll take less damage as a Tank.";
                     yield return new WaitForSeconds(dialoguePause);
+                    int blockedDmg = Random.Range(0, 3); // if the player is on the tank role, block a random amount of damage, lowest block being 0, highest block being 2
+                    isDead = playerUnit.TakeDamage(damage - blockedDmg);
                     dialogueText.text = "The enemy did " + (damage - blockedDmg) + " damage!";
+                    yield return new WaitForSeconds(dialoguePause);
+                    dialogueText.text = "You tanked " + blockedDmg + " damage!";
                     yield return new WaitForSeconds(dialoguePause);
                 }
                 else
@@ -404,6 +380,39 @@ public class BattleSystem : MonoBehaviour
                 state = BattleState.LOST;
                 StartCoroutine(EndBattle());
                 yield break;
+            }
+
+            if (enemyUnits[i].isPoisoned)
+            {
+                dialogueText.text = "The enemy is poisoned!";
+                yield return new WaitForSeconds(dialoguePause);
+                bool poisonKilled = enemyUnits[i].TakeDamage(playerUnit.attackMap[PlayerAttacks.POISON].getDamage(), playerUnit.attackMap[PlayerAttacks.POISON].getType());
+                enemyHuds[i].SetHP((float)enemyUnits[i].currentHP / enemyUnits[i].maxHP, enemyUnits[i].currentHP, enemyUnits[i].maxHP);
+                enemyUnits[i].poisonedRoundsLeft--;
+                if (enemyUnits[i].poisonedRoundsLeft <= 0)
+                {
+                    enemyUnits[i].isPoisoned = false;
+                }
+
+                if (poisonKilled)
+                {
+                    dialogueText.text = "That was a finishing blow!";
+                    yield return new WaitForSeconds(dialoguePause);
+                    Destroy(enemyUnits[i].gameObject);
+                    enemyUnits.RemoveAt(i);
+                    enemyHuds.RemoveAt(i);
+                    if (enemyUnits.Count <= 0)
+                    {
+                        // end the battle
+                        state = BattleState.WON;
+                        StartCoroutine(EndBattle());
+                    }
+                    else
+                    {
+                        // skip this enemy attacking, and move onto the next
+                        continue;
+                    }
+                }
             }
 
         }

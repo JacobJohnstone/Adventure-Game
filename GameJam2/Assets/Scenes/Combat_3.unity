@@ -1884,6 +1884,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3008431293953960570}
     - target: {fileID: 365023090183681908, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
+      propertyPath: shockContainer
+      value: 
+      objectReference: {fileID: 3008431293953960573}
+    - target: {fileID: 365023090183681908, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
       propertyPath: poisonContainer
       value: 
       objectReference: {fileID: 3008431293953960571}
@@ -2065,6 +2069,11 @@ GameObject:
 --- !u!1 &3008431293953960572 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6796369199074154336, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
+  m_PrefabInstance: {fileID: 3008431293953960569}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3008431293953960573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5269555013754817908, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
   m_PrefabInstance: {fileID: 3008431293953960569}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

@@ -107,9 +107,9 @@ MonoBehaviour:
   weaknesses: 
   resistances: 
   unitName: Ogre
-  maxHP: 5
-  currentHP: 5
-  isSmart: 0
+  maxHP: 40
+  currentHP: 40
+  isSmart: 1
   isPoisoned: 0
   poisonedRoundsLeft: 0
   queuedAttack:
@@ -117,13 +117,16 @@ MonoBehaviour:
     needsToCharge: 0
     turnRequired: 0
   attackList:
-  - damage: 10
-    needsToCharge: 0
-    turnRequired: 0
   - damage: 20
     needsToCharge: 1
     turnRequired: 0
+  - damage: 10
+    needsToCharge: 0
+    turnRequired: 0
   - damage: 15
+    needsToCharge: 0
+    turnRequired: 0
+  - damage: 5
     needsToCharge: 0
     turnRequired: 0
 --- !u!61 &1542099419008285868

@@ -180,9 +180,11 @@ MonoBehaviour:
   weaknesses: 
   resistances: 
   unitName: Theif
-  maxHP: 12
-  currentHP: 12
+  maxHP: 10
+  currentHP: 10
   isSmart: 0
+  isPoisoned: 0
+  poisonedRoundsLeft: 0
   queuedAttack:
     damage: 0
     needsToCharge: 0

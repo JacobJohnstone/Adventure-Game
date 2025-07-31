@@ -171,6 +171,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &550922171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5269555013754817908, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
+  m_PrefabInstance: {fileID: 849771924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &642040617
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +485,10 @@ PrefabInstance:
       propertyPath: SlashContainer
       value: 
       objectReference: {fileID: 849771927}
+    - target: {fileID: 365023090183681908, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
+      propertyPath: shockContainer
+      value: 
+      objectReference: {fileID: 550922171}
     - target: {fileID: 365023090183681908, guid: 98e7b1b8a7aa44141914dad480d5b407, type: 3}
       propertyPath: poisonContainer
       value: 

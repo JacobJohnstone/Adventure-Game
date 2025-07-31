@@ -6,6 +6,7 @@ public class playerInfoHud : MonoBehaviour
     int playerLevel;
     public Text levelText;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,5 +34,7 @@ public class playerInfoHud : MonoBehaviour
         levelText.text = "Level " + playerLevel;
 
     }
+
+
 
 }

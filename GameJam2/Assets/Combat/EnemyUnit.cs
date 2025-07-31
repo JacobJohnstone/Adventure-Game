@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
+
 
 public class EnemyUnit : Unit
 {
@@ -65,7 +67,16 @@ public class EnemyUnit : Unit
 
         if (isSmart)
         {
+            int chosenIndex;
 
+            // pick a random index, that is not the same as the last
+            do
+            {
+                chosenIndex = Random.Range(0, attackList.Count);
+            } while (chosenIndex != lastAttackIndex);
+
+            attack = attackList[chosenIndex];
+            lastAttackIndex = chosenIndex;
         } 
         else
         {

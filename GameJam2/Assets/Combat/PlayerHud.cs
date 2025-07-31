@@ -35,6 +35,8 @@ public class PlayerHud : MonoBehaviour
     [SerializeField]
     GameObject poisonContainer;
     [SerializeField]
+    GameObject shockContainer;
+    [SerializeField]
     GameObject SlashContainer;
 
     //Text nameText;
@@ -105,7 +107,16 @@ public class PlayerHud : MonoBehaviour
         playerUnit.SetClass("mage");
         classOptions.SetActive(false);
         mageOptions.SetActive(true);
-        if (hasSpellBook)
+        if (MainManager.instance.currentMana >= MainManager.instance.shockManaCost)
+        {
+            shockContainer.SetActive(true);
+        }
+        else
+        {
+            shockContainer.SetActive(false);
+        }
+
+        if (hasSpellBook && MainManager.instance.currentMana >= MainManager.instance.fireballManaCost)
         {
             fireballContainer.SetActive(true);
         } else
@@ -113,7 +124,7 @@ public class PlayerHud : MonoBehaviour
             fireballContainer.SetActive(false);
         }
 
-        if(level > 1)
+        if(level > 1 && MainManager.instance.currentMana >= MainManager.instance.poisonManaCost)
         {
             poisonContainer.SetActive(true);
         } else

@@ -14,6 +14,7 @@ public class DialogueProgression : MonoBehaviour
     {
         timelineDirector.Play();
         StartCoroutine(SceneTransition.instance.TransitionIn());
+        //StartDialogue();
     }
 
     void Update()
