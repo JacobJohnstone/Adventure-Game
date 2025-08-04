@@ -3,7 +3,7 @@ using UnityEngine.Tilemaps;
 
 public class transparentWalls : MonoBehaviour
 {
-    Tilemap tilemap;
+    [SerializeField] Tilemap tilemap;
     float hiddenOpacity = 0.3f;
 
     private void OnTriggerStay2D(Collider2D collision)

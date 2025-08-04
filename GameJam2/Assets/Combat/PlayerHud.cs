@@ -133,12 +133,18 @@ public class PlayerHud : MonoBehaviour
         }
     }
 
+    public void OnMageBack()
+    {
+        classOptions.SetActive(true);
+        mageOptions.SetActive(false);
+    }
+
     public void OnFighterButton()
     {
         playerUnit.SetClass("fighter");
         classOptions.SetActive(false);
         fighterOptions.SetActive(true);
-        if(level > 3)
+        if(level > 2)
         {
             SlashContainer.SetActive(true);
         } else
@@ -147,11 +153,23 @@ public class PlayerHud : MonoBehaviour
         }
     }
 
+    public void OnFighterBack()
+    {
+        classOptions.SetActive(true);
+        fighterOptions.SetActive(false);
+    }
+
     public void OnTankButton()
     {
         playerUnit.SetClass("tank");
         classOptions.SetActive(false);
         tankOptions.SetActive(true);
+    }
+
+    public void OnTankBack()
+    {
+        classOptions.SetActive(true);
+        tankOptions.SetActive(false);
     }
 
     public void ShowTargetOptions(int targetsLeft)

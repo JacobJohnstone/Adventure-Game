@@ -1025,6 +1025,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 854012598170922521, guid: 899b1bff5ebab894189b1a73d5035358, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 854012598170922521, guid: 899b1bff5ebab894189b1a73d5035358, type: 3}
+      propertyPath: m_CullingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5225374589484466127, guid: 899b1bff5ebab894189b1a73d5035358, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.5283019
@@ -21010,8 +21018,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a59510dd49cac2e4a9b71fcae277e689, type: 3}
-  m_Resource: {fileID: 8300000, guid: a59510dd49cac2e4a9b71fcae277e689, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d37ed1e25031abe4ba15798e15ce2819, type: 3}
+  m_Resource: {fileID: 8300000, guid: d37ed1e25031abe4ba15798e15ce2819, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

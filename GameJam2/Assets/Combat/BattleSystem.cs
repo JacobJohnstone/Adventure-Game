@@ -335,7 +335,7 @@ public class BattleSystem : MonoBehaviour
                     // Take less damage if you are the tank
                     dialogueText.text = "You'll take less damage as a Tank.";
                     yield return new WaitForSeconds(dialoguePause);
-                    int blockedDmg = Random.Range(0, 3); // if the player is on the tank role, block a random amount of damage, lowest block being 0, highest block being 2
+                    int blockedDmg = Random.Range(1, 5); // if the player is on the tank role, block a random amount of damage, lowest block being 0, highest block being 2
                     isDead = playerUnit.TakeDamage(damage - blockedDmg);
                     dialogueText.text = "The enemy did " + (damage - blockedDmg) + " damage!";
                     yield return new WaitForSeconds(dialoguePause);
@@ -346,9 +346,23 @@ public class BattleSystem : MonoBehaviour
                 {
                     // The player is not a tank, take the normal amount of damage
 
-                    isDead = playerUnit.TakeDamage(damage);
-                    dialogueText.text = "The enemy did " + damage + " damage!";
-                    yield return new WaitForSeconds(dialoguePause);
+                    int chanceHit = Random.Range(0, 101);
+
+                    if (chanceHit > MainManager.instance.missChance - 2)
+                    {
+                        isDead = playerUnit.TakeDamage(damage);
+                        dialogueText.text = "The attack was successful";
+                        yield return new WaitForSeconds(dialoguePause);
+                        dialogueText.text = "The enemy did " + damage + " damage!";
+                        yield return new WaitForSeconds(dialoguePause);
+                    }
+                    else
+                    {
+                        dialogueText.text = "The attack missed!";
+                        yield return new WaitForSeconds(dialoguePause);
+                    }
+
+
                 }
             }
             else if (playerUnit.isBlocking && !enemyIsCharging) {
@@ -430,10 +444,10 @@ public class BattleSystem : MonoBehaviour
             dialogueText.text = "You won the battle!";
             yield return new WaitForSeconds(dialoguePause);
             // update mainmanager XP
-            int level = MainManager.instance.level++;
-            MainManager.instance.levelUp(level + 1);
+            int level = MainManager.instance.level++;   
             // update mainmanager hp
             MainManager.instance.currentHP = playerUnit.currentHP;
+            MainManager.instance.levelUp();
             // set DoorID to combat won before changing scenes
             SceneSpawns.instance.UpdateDoorID(DoorIDs.wonLevel1Combat);
         }
@@ -448,7 +462,7 @@ public class BattleSystem : MonoBehaviour
 
         // change scenes outside of conditional
         string currentLevel = SceneSpawns.instance.currentLevel.ToString();
-        if(currentLevel == "Level_3" && state == BattleState.WON)
+        if(currentLevel == "level_3" && state == BattleState.WON)
         {
             currentLevel = "Finale";
         }
